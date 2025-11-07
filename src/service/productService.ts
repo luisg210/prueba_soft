@@ -1,4 +1,4 @@
-import { collection, addDoc, getDocs, updateDoc, doc, getDoc } from "firebase/firestore";
+import { collection, addDoc, getDocs, updateDoc, doc, getDoc, deleteDoc } from "firebase/firestore";
 import type { Product } from "../types/Product";
 import { auth, db } from "../firebase/firebase";
 
@@ -31,3 +31,8 @@ export const getProductByIdService = async (id: string) => {
     const snapshot = await getDoc(doc(db, "articulos", id));
     return snapshot.exists() ? { id: snapshot.id, ...snapshot.data() } as Product : null;
 }
+
+export const deleteProduct = async (id: string): Promise<void> => {
+    await deleteDoc(doc(db, "articulos", id));
+}
+
